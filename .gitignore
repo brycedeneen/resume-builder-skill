@@ -1,0 +1,17 @@
+# Personal resume data
+resume.md
+resume_template.docx
+
+# Generated resumes
+resume_*.docx
+
+# Temp files
+/tmp/
+*.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Claude Code
+.claude/
