@@ -28,7 +28,7 @@ git clone <repo-url> resume-builder
 cd resume-builder
 
 # Install Python dependencies
-pip3 install python-docx playwright
+pip3 install python-docx playwright pdfplumber
 
 # Install the skill into Claude Code
 mkdir -p ~/.claude/skills/build-resume
@@ -37,15 +37,26 @@ cp SKILL.md ~/.claude/skills/build-resume/SKILL.md
 
 ### Create Your Resume
 
-Copy the example and fill in your experience:
+**Option A: Import from an existing resume file**
+
+If you already have a resume as `.docx`, `.pdf`, or `.txt`, just tell Claude:
+
+```
+Here's my resume: /path/to/my_resume.pdf
+```
+
+Claude will extract the content, convert it to the `resume.md` format, and ask you to review it.
+
+**Option B: Start from the template**
 
 ```bash
 cp resume_example.md resume.md
 ```
 
-Edit `resume.md` with all of your experience, achievements, and skills. This is your **master resume** — include everything. The skill will select the most relevant items per application.
+Edit `resume.md` with all of your experience, achievements, and skills.
 
-Tips for `resume.md`:
+**Tips for `resume.md`:**
+- This is your **master resume** — include everything
 - Quantify achievements whenever possible ($X revenue, Y% growth, Z team members)
 - Include all roles going back 10-15 years
 - List all technical skills, tools, and certifications
@@ -74,6 +85,7 @@ The `/build-resume` skill triggers automatically and walks you through:
 |------|---------|
 | `SKILL.md` | The Claude Code skill (copy to `~/.claude/skills/build-resume/`) |
 | `generate_resume.py` | ATS-optimized Word document generator |
+| `import_resume.py` | Extract text from .docx/.pdf/.txt for resume.md creation |
 | `apply_to_role.py` | Chrome automation for semi-automated applications |
 | `resume.md` | Your master resume (you create this, gitignored) |
 | `resume_example.md` | Template to get started |

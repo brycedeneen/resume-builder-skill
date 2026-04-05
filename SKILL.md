@@ -1,6 +1,6 @@
 ---
 name: build-resume
-description: Use when the user provides a job posting URL or description and wants a tailored resume, asks to analyze job fit, or says build/tailor resume or apply for a role
+description: Use when the user provides a job posting URL or description and wants a tailored resume, asks to analyze job fit, says build/tailor resume or apply for a role, or wants to import an existing resume file into resume.md
 ---
 
 # Build Resume
@@ -10,9 +10,49 @@ Interactive workflow: analyze a job description against the user's master resume
 ## Prerequisites
 
 - `resume.md` in working directory (master resume — additive, never remove content)
-- `generate_resume.py` in working directory
+- `generate_resume.py`, `import_resume.py` in working directory
 - `python-docx` installed (`pip3 install python-docx`)
+- For PDF import: `pdfplumber` installed (`pip3 install pdfplumber`)
 - For Step 8 (Apply): `playwright` installed (`pip3 install playwright`), `apply_to_role.py` in working directory, Google Chrome installed
+
+## Importing a Resume
+
+If `resume.md` does not exist and the user provides a resume file (.docx, .pdf, .txt), run the import flow **before** the main workflow:
+
+1. Extract text from the file:
+   ```bash
+   python3 import_resume.py <resume_file>
+   ```
+2. Parse the extracted text into structured sections: name, contact info, overview/summary, experience (title, company, location, dates, description, bullets), education, and skills.
+3. Write `resume.md` in this format:
+   ```markdown
+   # Full Name
+
+   phone | email | linkedin
+
+   ## Overview
+   Summary paragraph...
+
+   ## Experience
+
+   ### Job Title
+   **Company | Location**
+   *Dates*
+   Role description...
+   - Bullet 1
+   - Bullet 2
+
+   ## Education
+   Degree — School
+
+   ## Skills
+   - Skill 1
+   - Skill 2
+   ```
+4. Present `resume.md` to the user for review. Ask:
+   - "Does this look complete? Anything missing or incorrect?"
+   - "Any achievements, metrics, or skills to add?"
+5. Apply corrections, then proceed with the main workflow.
 
 ## Workflow
 
