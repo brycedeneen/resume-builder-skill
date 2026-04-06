@@ -15,3 +15,5 @@ __pycache__/
 
 # Claude Code
 .claude/
+docs/superpowers/plans/2026-04-06-resume-builder-svc.md
+docs/superpowers/specs/2026-04-06-resume-builder-svc-design.md
